@@ -9,10 +9,10 @@ trigger:
 # Variables
 variables:
   tag: '$(Build.BuildId)'
-pool:
-  vmImage: ubuntu-latest
+
 stages:
 - stage: Build
+  displayName: Build Stage
   jobs:
   - job: Build
     displayName: Build Job
@@ -30,7 +30,7 @@ stages:
       - task: Docker@2
         inputs:
           containerRegistry: 'manual-aksdevopsacr-svc'
-          repository: 'custom2appnginx'
+          repository: 'custom2appnginxapp1'
           command: 'buildAndPush'
           Dockerfile: '**/Dockerfile'
           tags: |
@@ -55,5 +55,5 @@ stages:
       - task: PublishBuildArtifacts@1
         inputs:
           PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-          ArtifactName: 'drop'
+          ArtifactName: 'kube-manifests'
           publishLocation: 'Container'
